@@ -6,12 +6,6 @@
 
 #include <synth_simple_drum.h>
 
-#include <Audio.h>
-#include <Wire.h>
-#include <SPI.h>
-#include <SD.h>
-#include <SerialFlash.h>
-
 // GUItool: begin automatically generated code
 AudioSynthSimpleDrum     drum2;          //xy=399,244
 AudioSynthSimpleDrum     drum3;          //xy=424,310
@@ -28,7 +22,7 @@ AudioConnection          patchCord6(mixer1, 0, i2s1, 1);
 AudioControlSGTL5000     sgtl5000_1;     //xy=930,518
 // GUItool: end automatically generated code
 
-static uint32_t next;
+int next;
 
 void setup() {
   // put your setup code here, to run once:
@@ -71,20 +65,18 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
   int a1 = analogRead(A0);
   int a2 = analogRead(A1);
 
-
   //Serial.println((float)a1/1024);
+  //Serial.println(a1);
 
-  Serial.println(a1);
-  //  sgtl5000_1.volume(1.);
   drum1.frequency(a1);
+  drum1.secondMix( (float)a1/1023 );
   static uint32_t num = 0;
 
-  if(millis() == next)
+  if(millis() >= next)
   {
     next = millis() + 1000;
 
@@ -103,12 +95,13 @@ void loop() {
         drum4.noteOn();
         break;
     }
-   // num++;
-
+    num++;
+    /*
     Serial.print("Diagnostics: ");
     Serial.print(AudioProcessorUsageMax());
     Serial.print(" ");
     Serial.println(AudioMemoryUsageMax());
     AudioProcessorUsageMaxReset();
+    */
   }
 }
