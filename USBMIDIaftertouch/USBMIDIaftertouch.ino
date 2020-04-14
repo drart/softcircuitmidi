@@ -23,6 +23,9 @@ int previousA3 = -1;
 elapsedMillis msec = 0;
 
 
+
+
+
 // from examples
 void controlChange(byte channel, byte control, byte value) {
   midiEventPacket_t event = {0x0B, 0xB0 | channel, control, value};
