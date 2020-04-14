@@ -1,4 +1,7 @@
 #include "MIDIUSB.h"
+#include "MIDI.h"
+
+MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);
 
 int led = 13;
 
@@ -35,6 +38,7 @@ void aftertouch(byte channel, byte control, byte value) {
 void setup() {
   pinMode(led, OUTPUT); 
 
+  MIDI.begin();
 }
 
 void loop() {
@@ -46,6 +50,7 @@ void loop() {
     int n1 = analogRead(A1) / 8;
     int n2 = analogRead(A2) / 8;
     int n3 = analogRead(A3) / 8;
+    
     if (n0 != previousA0) {
 
       aftertouch(0, controllerA0, n0);
@@ -57,7 +62,8 @@ void loop() {
       digitalWrite(led, LOW);
     }
     if (n1 != previousA1) {
-      aftertouch(0, controllerA1, n1);
+      aftertouch(0, controllerA1, n1); // channel, number, value
+      MIDI.sendAfterTouch(controllerA1, n1, 0); // number, value, channel
       previousA1 = n1;
     }
     if (n2 != previousA2) {
