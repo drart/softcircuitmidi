@@ -65,10 +65,11 @@ void loop() {
       digitalWrite(led, LOW);
     }
     if (n1 != previousA1) {
-      aftertouch(0, controllerA1, n1); // channel, number, value
-      MIDI.sendAfterTouch(controllerA1, n1, 0); // number, value, channel
+      aftertouch(0, controllerA1, n1); // channel, number, value  via USB
+      MIDI.sendAfterTouch(controllerA1, n1, 0); // number, value, channel VIA hardware MIDI
       previousA1 = n1;
     }
+    /*
     if (n2 != previousA2) {
       aftertouch(0, controllerA2, n2);
       previousA2 = n2;
@@ -77,5 +78,6 @@ void loop() {
       aftertouch(0, controllerA3, n3);
       previousA3 = n3;
     }
+    */
   }
 }

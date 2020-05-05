@@ -1,0 +1,11 @@
+#N canvas 466 196 450 300 12;
+#X obj 108 85 polytouchin;
+#X obj 108 173 *~ 0;
+#X obj 108 213 dac~;
+#X obj 108 140 osc~;
+#X obj 108 112 mtof;
+#X connect 0 0 4 0;
+#X connect 1 0 2 0;
+#X connect 1 0 2 1;
+#X connect 3 0 1 0;
+#X connect 4 0 3 0;
