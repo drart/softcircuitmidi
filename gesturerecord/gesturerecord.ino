@@ -38,10 +38,10 @@ void aftertouch(byte channel, byte control, byte value) {
 
 
 unsigned int data[500];//~1kb loop memory
+unsigned int data2[500];
+
 boolean recording = false;
 int ndx = 0;
-
-// led pin
 
 void setup(){
     pinMode(led, OUTPUT);
@@ -49,6 +49,7 @@ void setup(){
     
     for (int i = 0; i < 500; i++){
         data[i] = i  % 255;
+        data2[i] = i % 255; 
     }
 }
 
@@ -64,11 +65,12 @@ void loop(){
 
   if (recording){
     data[ndx] = analogRead(0) / 8;
-  }else{
-    analogWrite(led , data[ndx]);
-    aftertouch(0, 20, data[ndx] / 2);
+    data2[ndx] = analogRead(1) / 8;
   }
-
+  
+  aftertouch(0, 20, data[ndx] / 2);
+  aftertouch(0, 21, data2[ndx] / 2);
+  
   ndx++;
   if (ndx == 500){
     recording = false;
